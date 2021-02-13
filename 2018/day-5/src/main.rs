@@ -1,8 +1,8 @@
 use std::io::Result;
 use std::{fs::File, io::Read};
 fn main() {
-    let mut input1 = load_file(String::from("input.txt")).unwrap();
-    for i in 1..10000 {
+    let input1 = load_file(String::from("input.txt")).unwrap();
+    for _i in 1..10000 {
         let result = process_file(&mut input1.clone());
         assert_eq!(result, 10584);
     }
