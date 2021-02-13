@@ -2,9 +2,8 @@
 
 extern crate test;
 
-use std::{fs, io::Result};
+use std::io::Result;
 use std::{fs::File, io::Read};
-use test::Bencher;
 
 fn main() {
     let input1 = load_file(String::from("input.txt")).unwrap();
@@ -15,12 +14,12 @@ fn main() {
 }
 fn load_file(file_name: String) -> Result<Vec<u8>> {
     let mut file = File::open(file_name)?;
-    let mut buf: Vec<u8> =Vec::with_capacity(file.metadata().unwrap().len() as usize);
+    let mut buf: Vec<u8> = Vec::with_capacity(file.metadata().unwrap().len() as usize);
     let _ = file.read_to_end(&mut buf)?;
     Ok(buf)
 }
 
-#[inline(always)]
+#[inline]
 fn process_file(file: &Vec<u8>) -> u16 {
     let mut vec: Vec<u8> = Vec::with_capacity(file.len());
     for d in file {
