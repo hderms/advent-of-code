@@ -2,25 +2,26 @@
 
 extern crate test;
 
-use std::io::Result;
+use std::{fs, io::Result};
 use std::{fs::File, io::Read};
 use test::Bencher;
 
 fn main() {
     let input1 = load_file(String::from("input.txt")).unwrap();
     for _i in 1..10000 {
-        let result = process_file(&mut input1.clone());
+        let result = process_file(&input1);
         assert_eq!(result, 10584);
     }
 }
 fn load_file(file_name: String) -> Result<Vec<u8>> {
     let mut file = File::open(file_name)?;
-    let mut buf: Vec<u8> = vec![];
+    let mut buf: Vec<u8> =Vec::with_capacity(file.metadata().unwrap().len() as usize);
     let _ = file.read_to_end(&mut buf)?;
     Ok(buf)
 }
 
-fn process_file(file: &mut Vec<u8>) -> u16 {
+#[inline(always)]
+fn process_file(file: &Vec<u8>) -> u16 {
     let mut vec: Vec<u8> = Vec::with_capacity(file.len());
     for d in file {
         let c = *d;
