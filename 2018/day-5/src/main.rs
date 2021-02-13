@@ -1,5 +1,11 @@
+#![feature(test)]
+
+extern crate test;
+
 use std::io::Result;
 use std::{fs::File, io::Read};
+use test::Bencher;
+
 fn main() {
     let input1 = load_file(String::from("input.txt")).unwrap();
     for _i in 1..10000 {
@@ -29,4 +35,16 @@ fn process_file(file: &mut Vec<u8>) -> u16 {
         }
     }
     vec.len() as u16
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use test::Bencher;
+
+    #[bench]
+    fn bench_add_two(b: &mut Bencher) {
+        let input1 = load_file(String::from("input.txt")).unwrap();
+        b.iter(|| process_file(&mut input1.clone()));
+    }
 }
